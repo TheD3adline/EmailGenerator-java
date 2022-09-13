@@ -17,13 +17,21 @@ public class ReadFiles {
         return false;
     }
 
-    public static void saveToContainer(String path, ArrayList<String> temp) throws IOException {
+    public static ArrayList<String> saveToContainer(String path) throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader(path));
+        ArrayList<String> tempList = new ArrayList<>();
         String curLine;
         int cnt = 1;
         while(((curLine = reader.readLine()) != null) && (cnt <= 8000)) {
-            temp.add(curLine);
+            tempList.add(curLine);
             cnt++;
         }
+        return tempList;
+    }
+    public static String getPathFirstNames() {
+        return pathFirstNames;
+    }
+    public static String getPathLastNames() {
+        return pathLastNames;
     }
 }
