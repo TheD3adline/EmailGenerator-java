@@ -5,10 +5,7 @@ import java.util.ArrayList;
 
 public class ReadFiles {
 
-    private static final String pathFirstNames = "input\\firstnames.rtf";
-    private static final String pathLastNames = "input\\lastnames.rtf";
-
-    public static boolean getFileInfo() {
+    public static boolean getFileInfo(String pathFirstNames, String pathLastNames) {
         if(Files.exists(Path.of(pathFirstNames))) {
             if(Files.exists(Path.of(pathLastNames))) {
                 return true;
@@ -27,11 +24,5 @@ public class ReadFiles {
             cnt++;
         }
         return tempList;
-    }
-    public static String getPathFirstNames() {
-        return pathFirstNames;
-    }
-    public static String getPathLastNames() {
-        return pathLastNames;
     }
 }
