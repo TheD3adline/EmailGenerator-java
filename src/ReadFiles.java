@@ -5,8 +5,8 @@ import java.util.ArrayList;
 
 public class ReadFiles {
 
-    private static final String pathFirstNames = "src\\firstnames.rtf";
-    private static final String pathLastNames = "src\\lastnames.rtf";
+    private static final String pathFirstNames = "input\\firstnames.rtf";
+    private static final String pathLastNames = "input\\lastnames.rtf";
 
     public static boolean getFileInfo() {
         if(Files.exists(Path.of(pathFirstNames))) {

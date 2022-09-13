@@ -1,3 +1,3 @@
-# EmailGenerator
+# EmailGenerator-java
 
 Practice project

@@ -5,7 +5,7 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
-        String pathFirstNames = "src\\firstnames.rtf";
+        String pathFirstNames = "input\\firstnames.rtf";
 
         ArrayList<String> firstNamesList = new ArrayList<>();
 
