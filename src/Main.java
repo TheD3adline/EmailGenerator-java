@@ -1,3 +1,9 @@
+/*
+* Author:   Michael Fessler
+* Date:     14.9.2022
+* Version:  0.3
+* Reads two specified .rtf files, loads the data into a StringBuilder and writes it into a new .csv file
+*/
 import java.io.IOException;
 import java.util.ArrayList;
 

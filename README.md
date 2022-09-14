@@ -1,3 +1,3 @@
 # EmailGenerator-java
 
-Practice project
+Practice project to read .rtf files
