@@ -1,8 +1,10 @@
 // Contains the file reading operations for the task
-import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 public class ReadFiles {
 
@@ -16,21 +18,21 @@ public class ReadFiles {
         return (Files.exists(Path.of(pathFirstNames))) && (Files.exists(Path.of(pathLastNames)));
     }
 
-    /**
-     * Reads the specified file line by line and writes them line by line as String into the ArrayList
-     * @param path File location
-     * @return ArrayList<String> tempList
-     * @throws IOException If file can't be found or is otherwise invalid
-     */
-    public static ArrayList<String> saveToContainer(String path) throws IOException {
-        BufferedReader reader = new BufferedReader(new FileReader(path));
-        ArrayList<String> tempList = new ArrayList<>();
-        String curLine;
-        int cnt = 1;
-        while(((curLine = reader.readLine()) != null) && (cnt <= 8000)) {
-            tempList.add(curLine);
-            cnt++;
+    public static void readTextFiles(String path, ArrayList<String> ListToAdd)
+    {
+        try {
+            File tempFile = new File(path);
+            Scanner reader = new Scanner(tempFile);
+            while (reader.hasNextLine()) {
+                String data = reader.nextLine();
+                data = data.replace("\\", "");
+                data = data.replace("\n", "");
+                ListToAdd.add(data);
+            }
+            reader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("File could not be found");
+            e.printStackTrace();
         }
-        return tempList;
     }
 }
