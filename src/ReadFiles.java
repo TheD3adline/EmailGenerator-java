@@ -1,4 +1,4 @@
-// Contains the file reading operations for the task
+// File reading operations for the task
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;

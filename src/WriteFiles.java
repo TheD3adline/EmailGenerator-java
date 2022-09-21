@@ -1,4 +1,4 @@
-// Contains the file writing operations for the task
+// File writing operations for the task
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;

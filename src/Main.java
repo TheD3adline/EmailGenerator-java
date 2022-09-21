@@ -1,8 +1,10 @@
 /*
-* Author:   Michael Fessler
-* Date:     14.9.2022
-* Version:  0.3
-* Reads two specified .rtf files, loads the data into several Lists and Arrays, then writes into a new .csv file
+*   Author:     Michael Fessler
+*   Date:       2022/09/14
+*   Version:    0.4
+*               Reads two specified .rtf files, loads their data into
+*               ArrayLists, forms .csv writeable strings from them
+*               and then writes the shoveled around data into a .csv file.
 */
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,12 +18,15 @@ public class Main {
     static ArrayList<String> firstNamesList = new ArrayList<>();
     static ArrayList<String> lastNamesList = new ArrayList<>();
     static ArrayList<String> emailList = new ArrayList<>();
+    static ArrayList<String> rdyToWriteList = new ArrayList<>();
     static Random rng = new Random();
     static ArrayList<Integer> fRandomIndexes = new ArrayList<>();
     static ArrayList<Integer> lRandomIndexes = new ArrayList<>();
     static ArrayList<String> IDNumbers = new ArrayList<>();
-    static String[] domains = {"@gmx.at", "@yahoo.com", "@icloud.com", "@gmx.net", "@gmail.com", "@qualifizierung.at",
-                               "@bbrz.at", "@gov.at", "@me.com", "@ams.at", "@private-relay.com", "@discord.com",};
+    static String[] domains = {"@gmx.at", "@yahoo.com", "@icloud.com",
+                                "@gmx.net", "@gmail.com", "@qualifizierung.at",
+                                "@bbrz.at", "@gov.at", "@me.com", "@ams.at",
+                                "@private-relay.com", "@discord.com",};
 
     public static void main(String[] args) throws IOException {
 
@@ -30,16 +35,13 @@ public class Main {
             ReadFiles.readTextFiles(pathLastNames, lastNamesList);
             for(int i = 0; i < 8000; i++) {
                 emailList.add(makeEmails());
+                rdyToWriteList.add(convertToCSV(i));
             }
-            if(WriteFiles.createFile(pathOutput)) {
-                for(int i = 0; i < 8000; i++) {
-                    WriteFiles.writeDataToFile(pathOutput, convertToCSV(i));
-                }
-            }
+
+
         }
         for(int i = 0; i < 10; i++) {
-            System.out.println(firstNamesList.get(fRandomIndexes.get(i)) + ", " + lastNamesList.get(lRandomIndexes.get(i)) + ", " +
-                    IDNumbers.get(i) + ", " + emailList.get(i));
+            System.out.print(rdyToWriteList.get(i));
         }
 
     }
@@ -51,12 +53,13 @@ public class Main {
         int lastNamesIndex = rng.nextInt(88798);
         lRandomIndexes.add(lastNamesIndex);
 
-        String IDNumber = getIDNumber(rng.nextInt(9999));
+        String IDNumber = getIDNumber(rng.nextInt(1, 9999));
         IDNumbers.add(IDNumber);
         int randomDomainIndex = rng.nextInt(10);
 
-        return firstNamesList.get(firstNamesIndex) + '_' +
-                lastNamesList.get(lastNamesIndex) + IDNumber + domains[randomDomainIndex];
+        return firstNamesList.get(firstNamesIndex) + "_" +
+                lastNamesList.get(lastNamesIndex) + IDNumber +
+                domains[randomDomainIndex];
     }
 
     public static String getIDNumber(int IDNumber) {
