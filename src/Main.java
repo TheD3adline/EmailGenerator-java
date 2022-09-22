@@ -6,12 +6,13 @@
 *               ArrayLists, forms .csv writeable strings from them
 *               and then writes the shoveled around data into a .csv file.
 */
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Random;
 
 public class Main {
-
     static final String pathFirstNames = "input\\firstnames.rtf";
     static final String pathLastNames = "input\\lastnames.rtf";
     static final String pathOutput = "output\\EmailFile.csv";
@@ -23,27 +24,28 @@ public class Main {
     static ArrayList<Integer> fRandomIndexes = new ArrayList<>();
     static ArrayList<Integer> lRandomIndexes = new ArrayList<>();
     static ArrayList<String> IDNumbers = new ArrayList<>();
+    static HashSet<String> IDSet = new HashSet<>();
     static String[] domains = {"@gmx.at", "@yahoo.com", "@icloud.com",
                                 "@gmx.net", "@gmail.com", "@qualifizierung.at",
                                 "@bbrz.at", "@gov.at", "@me.com", "@ams.at",
-                                "@private-relay.com", "@discord.com",};
+                                "@private-relay.com", "@discord.com"};
 
     public static void main(String[] args) throws IOException {
 
         if(ReadFiles.getFileInfo(pathFirstNames, pathLastNames)) {
             ReadFiles.readTextFiles(pathFirstNames, firstNamesList);
             ReadFiles.readTextFiles(pathLastNames, lastNamesList);
-            for(int i = 0; i < 8000; i++) {
+            for (int i = 0; i < 8000; i++) {
                 emailList.add(makeEmails());
                 rdyToWriteList.add(convertToCSV(i));
             }
-
-
+            if(WriteFiles.createFile(pathOutput)) {
+                WriteFiles.writeDataToFile(pathOutput, rdyToWriteList);
+            } else {
+                WriteFiles.deleteFileContent(pathOutput);
+                WriteFiles.writeDataToFile(pathOutput, rdyToWriteList);
+            }
         }
-        for(int i = 0; i < 10; i++) {
-            System.out.print(rdyToWriteList.get(i));
-        }
-
     }
 
     public static String makeEmails() {
@@ -53,8 +55,15 @@ public class Main {
         int lastNamesIndex = rng.nextInt(88798);
         lRandomIndexes.add(lastNamesIndex);
 
-        String IDNumber = getIDNumber(rng.nextInt(1, 9999));
-        IDNumbers.add(IDNumber);
+        String IDNumber;
+        while (true) {
+            IDNumber = getIDNumber(rng.nextInt(1, 9999));
+            if (IDSet.add(IDNumber)) {
+                IDNumbers.add(IDNumber);
+                break;
+            }
+        }
+
         int randomDomainIndex = rng.nextInt(10);
 
         return firstNamesList.get(firstNamesIndex) + "_" +
@@ -73,8 +82,8 @@ public class Main {
     }
 
     public static String convertToCSV(int index) {
-        return firstNamesList.get(fRandomIndexes.get(index)) + ", " +
-                lastNamesList.get(lRandomIndexes.get(index)) + ", " +
-                IDNumbers.get(index) + ", " + emailList.get(index) + "\n";
+        return firstNamesList.get(fRandomIndexes.get(index)) + "; " +
+                lastNamesList.get(lRandomIndexes.get(index)) + "; " +
+                IDNumbers.get(index) + "; " + emailList.get(index) + "\n";
     }
 }

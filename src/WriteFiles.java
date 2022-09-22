@@ -2,6 +2,8 @@
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+
 public class WriteFiles {
 
     public static boolean createFile(String path) {
@@ -17,18 +19,32 @@ public class WriteFiles {
         } catch(IOException e) {
             System.out.println("Exception occurred");
             e.printStackTrace();
-            return false;
         }
+        return false;
     }
-    public static void writeDataToFile(String path, String data) {
+
+    public static void writeDataToFile(String path, ArrayList<String> data) {
         try {
+            System.out.println("Writing data to file");
             FileWriter csvWriter = new FileWriter(path);
-            csvWriter.append(data);
+            csvWriter.write("Vorname; Nachname; ID; e-Mail \n");
+            for(String str: data) {
+                csvWriter.write(str);
+            }
             csvWriter.flush();
             csvWriter.close();
         } catch(IOException e) {
             System.out.println("File not found");
             e.printStackTrace();
+        }
+    }
+
+    public static void deleteFileContent(String path) {
+        try {
+            System.out.println("Deleting previous file content");
+            new FileWriter(path, false).close();
+        } catch(IOException e) {
+            System.out.println("Exception occurred");
         }
     }
 }
